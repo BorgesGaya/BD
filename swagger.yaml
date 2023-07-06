@@ -1,0 +1,153 @@
+swagger: '2.0'
+info:
+  title: Series API
+  description: API para Séries
+  version: 1.0.0
+  contact:
+    name: "Borges Gaya Neto"
+    email: "borges.neto@aluno.riogrande.ifrs.edu.br"
+    url: "https://tads.riogrande.ifrs.edu.br"
+  license:
+    name: "MIT"
+host: tads.riogrande.ifrs.edu.br
+schemes:
+  - "http"
+  - "https"
+basePath: "/apiv1"
+paths:
+  /series:
+    get:
+      tags:
+        - Series
+      summary: Get All Series
+      description: Retorne uma lista com todas as séries
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  description: O ID da série
+                  "example": 1
+                titulo:
+                  type: string
+                  description: Titulo da série
+                  "example": Stranger Things
+                descricao:
+                  type: string
+                  description: Descricção da série
+                  "example": Um grupo de amigos se envolve em uma série de eventos sobrenaturais na pacata cidade de Hawkins. Eles enfrentam criaturas monstruosas, agências secretas do governo e se aventuram em dimensões paralelas.
+                genero:
+                  type: string
+                  description: Gênero da série
+                  "example": serie de ficção cientifica
+                classificacao_indicativa:
+                  type: string
+                  description: Indicacao de idade minimia do publico alvo
+                  "example": A16
+        '500':
+          description: Internal server error
+    post:
+      tags:
+        - Series
+      summary: Add a New Series
+      description: Adiciona uma nova série a lista
+      parameters:
+        - name: series
+          in: body
+          description: The series object to add
+          schema:
+            type: object
+            properties:
+              titulo:
+                type: string
+                description: Titulo da série
+                "example": The Witcher
+              descricao:
+                type: string
+                description: Descricção da série
+                "example": O mutante Geralt de Rívia é um caçador de monstros que luta para encontrar seu lugar em um mundo onde as pessoas, muitas vezes, são mais perversas do que as criaturas selvagens.
+              genero:
+                type: string
+                description: Gênero da série
+                "example": Séries Dramáticas
+              classificacao_indicativa:
+                type: string
+                description: Indicacao de idade minimia do publico alvo
+                "example": A16
+            required:
+              - titulo
+              - descricao
+              - genero
+              - classificacao_indicativa
+      responses:
+        '201':
+          description: Série adicionada com sucesso
+        '400':
+          description: Invalid request payload
+        '500':
+          description: Internal server error
+  /series/{id}:
+    get:
+      tags:
+        - Series
+      summary: Get a Series by ID
+      description: Retorna uma série usando o ID como base
+      parameters:
+        - name: id
+          in: path
+          description: O ID da série
+          type: integer
+          required: true
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: O ID da série
+                "example": 1
+              titulo:
+                type: string
+                description: Titulo da série
+                "example": Stranger Things
+              descricao:
+                type: string
+                description: Descricção da série
+                "example": Um grupo de amigos se envolve em uma série de eventos sobrenaturais na pacata cidade de Hawkins. Eles enfrentam criaturas monstruosas, agências secretas do governo e se aventuram em dimensões paralelas.
+              genero:
+                  type: string
+                  description: Gênero da série
+                  "example": serie de ficção cientifica
+              classificacao_indicativa:
+                  type: string
+                  description: Indicacao de idade minimia do publico alvo
+                  "example": A16
+        '404':
+          description: Série não encontrada
+        '500':
+          description: Internal server error
+    delete:
+      tags:
+        - Series
+      summary: Delete a Series
+      description: Deletar uma série da lista
+      parameters:
+        - name: id
+          in: path
+          description: O ID da série
+          type: integer
+          required: true
+      responses:
+        '204':
+          description: Série deletada com sucesso
+        '404':
+          description: Série não encontrada
+        '500':
+          description: Internal server error
